@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                 size: 30,
                 color: Colors.white,
               ),
-              onTap: () {},
+              onTap: (){},
               backgroundColor: mainColor,
               label: '알람',
             ),
