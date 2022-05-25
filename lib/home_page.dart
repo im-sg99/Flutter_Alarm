@@ -1,7 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm/alarm_setting_page.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,8 +13,12 @@ class _HomePageState extends State<HomePage> {
   var mainColor = const Color(0xff6524FF);
   var buttonSize = const Size(80,80);
 
+
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(40,50,40,40),
@@ -50,24 +54,38 @@ class _HomePageState extends State<HomePage> {
           childrenButtonSize: buttonSize,
           children: [
             SpeedDialChild(
-              child: const Icon(
-                Icons.alarm_add,
-                size: 30,
-                color: Colors.white,
+              child: const Text(
+                "알람",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Roboto",
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              onTap: (){},
+              onTap: ()=>showModalBottomSheet<void>(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top:Radius.circular(30.0))
+                  ),
+                  isScrollControlled: true,
+                  backgroundColor: Colors.white,
+                  builder: (context) => const AlarmSettingPage()
+              ),
               backgroundColor: mainColor,
-              label: '알람',
             ),
             SpeedDialChild(
-              child:const Icon(
-                Icons.alarm_sharp,
-                size: 30,
-                color: Colors.white,
+              child: const Text(
+                "퀵 알람",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Roboto",
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               onTap: () {},
               backgroundColor: mainColor,
-              label: '퀵설정',
             )
           ],
         ),
