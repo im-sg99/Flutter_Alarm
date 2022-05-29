@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_alarm/setting_label.dart';
+import 'package:flutter_alarm/setting_repeat.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class AlarmSettingPage extends StatefulWidget {
-  final String labelText;
-  const AlarmSettingPage({Key? key, required this.labelText}) : super(key: key);
+
+  const AlarmSettingPage({Key? key}) : super(key: key);
   @override
-  State<AlarmSettingPage> createState() => _AlarmSettingPageState();
+  State<AlarmSettingPage> createState() => AlarmSettingPageState();
 }
 
-class _AlarmSettingPageState extends State<AlarmSettingPage> {
-
+class AlarmSettingPageState extends State<AlarmSettingPage> {
+  String labelText='#일정';
   DateTime _dateTime = DateTime.now();
 
   @override
@@ -37,12 +38,6 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
-
-  void _labelChange(){
-    setState(() {
-      widget.labelText;
-    });
-  }
 
   final _boxDeco = const BoxDecoration(
       borderRadius: BorderRadius.all(
@@ -124,10 +119,10 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 190,
                   child: Text(
-                    widget.labelText,
+                    labelText,
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Roboto',
@@ -142,7 +137,7 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
               iconSize: 46,
               onPressed: ()=>showDialog(
                 context: context,
-                builder: (context)=>const SettingLabelPage(),
+                builder: (context)=> const SettingLabelPage(),
               ),
             ),
           ],
@@ -157,6 +152,40 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
       width:280,
       height: 65,
       decoration: _boxDeco,
+      child: Row(
+        children: [
+          const Icon(Icons.alarm, color:Color(0xff6524FF), size: 35,),
+          const SizedBox(
+            width: 50,
+            child: Text('반복',
+              style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 105,
+            child: Text(
+              labelText,
+              style: const TextStyle(
+                fontSize: 16,
+                fontFamily: 'Roboto',
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: ()=>showDialog(
+            context: context,
+            builder: (context)=>const SettingRepeatPage(),
+            ),
+            icon: const Icon(Icons.chevron_right),
+            color: const Color(0xff6524FF),
+            iconSize: 46,
+          ),
+        ],
+      ),
     );
   }
 
@@ -168,6 +197,12 @@ class _AlarmSettingPageState extends State<AlarmSettingPage> {
       height: 65,
       decoration: _boxDeco,
     );
+  }
+
+  void _changeLabel(text){
+    setState(() {
+      labelText = text;
+    });
   }
 }
 

@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
               ),
               isScrollControlled: true,
               backgroundColor: Colors.white,
-              builder: (context) => const AlarmSettingPage(labelText: '#일정',)
+              builder: (context) => const AlarmSettingPage()
           ),
           backgroundColor: mainColor,
         ),

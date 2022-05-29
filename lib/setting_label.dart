@@ -10,20 +10,22 @@ class SettingLabelPage extends StatefulWidget {
 class _SettingLabelPageState extends State<SettingLabelPage> {
 
   final TextEditingController _labelTextEditController = TextEditingController();
-  final String labelText = '';
+  String labelText = '';
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
+      backgroundColor: const Color(0xffE5E5E5),
       content: SingleChildScrollView(
         child: ListBody(
           children: [
-            const Text('라벨'),
+            _buildTitle(),
             _buildTextField(),
             Row(
               children: [
-                _buildTextButtonCencel(),
-                _buildTextButtonConfirm()
+                _buildTextButtonCancel(),
+                _buildTextButtonConfirm(),
               ],
             )
           ],
@@ -37,15 +39,29 @@ class _SettingLabelPageState extends State<SettingLabelPage> {
     super.dispose();
   }
 
+  Widget _buildTitle(){
+    return const Text(
+      '라벨 설정',
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Roboto',
+      ),
+    );
+  }
+
   Widget _buildTextButtonConfirm(){
     return TextButton(
       onPressed: (){
-        Navigator.pop(context,labelText);
+
       },
       child: Container(
         width: 120,
         height: 45,
-        color: const Color(0xff6524FF),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.0),
+          color: const Color(0xff6524FF),
+        ),
         child: const Center(
             child: Text(
               '확인',
@@ -60,13 +76,16 @@ class _SettingLabelPageState extends State<SettingLabelPage> {
     );
   }
 
-  Widget _buildTextButtonCencel(){
+  Widget _buildTextButtonCancel(){
     return TextButton(
       onPressed: ()=>Navigator.pop(context),
       child: Container(
         width: 120,
         height: 45,
-        color: const Color(0xffCCD3E3),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.0),
+          color: const Color(0xffCCD3E3),
+        ),
         child: const Center(
             child: Text(
               '취소',
@@ -93,6 +112,7 @@ class _SettingLabelPageState extends State<SettingLabelPage> {
           borderSide: BorderSide(color: Color(0xff6524FF),width: 2),
         ),
       ),
+
     );
   }
 }
