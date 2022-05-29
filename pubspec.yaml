@@ -18,6 +18,7 @@ dependencies:
   animated_splash_screen: ^1.2.0
   get: ^4.6.5
   flutter_time_picker_spinner: ^2.0.0
+  android_alarm_manager_plus: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -32,3 +33,20 @@ flutter:
   uses-material-design: true
   assets:
     - assets/Images/
+
+font:
+  - family: Roboto
+    fonts:
+      - asset: assets/font/Roboto-Black.ttf
+      - asset: assets/font/Roboto-Blackitalic.ttf
+      - asset: assets/font/Roboto-BlackBold.ttf
+      - asset: assets/font/Roboto-BlackBoldItalic.ttf
+      - asset: assets/font/Roboto-Italic.ttf
+      - asset: assets/font/Roboto-Light.ttf
+      - asset: assets/font/Roboto-LightItalic.ttf
+      - asset: assets/font/Roboto-Medium.ttf
+      - asset: assets/font/Roboto-MediumItalic.ttf
+      - asset: assets/font/Roboto-Regular.ttf
+      - asset: assets/font/Roboto-ThinItalic.ttf
+
+

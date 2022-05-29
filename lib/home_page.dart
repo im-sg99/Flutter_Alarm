@@ -10,85 +10,90 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var mainColor = const Color(0xff6524FF);
-  var buttonSize = const Size(80,80);
-
 
   @override
   Widget build(BuildContext context) {
 
+    //위에 배터리 표시줄 안뜨게
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(40,50,40,40),
         child: Column(
-          children: const [
-            Text('Kant',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize:48,
-                letterSpacing: -2,
-                fontFamily: "Roboto",
-                color: Color(0xff6524FF),
-              ),
-            ),
-            SizedBox(
-              height:70,
-            ),
-            Text("아아아아"),
+          children: [
+            _buildTop(),
           ],
         ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20,right: 20),
-        child: SpeedDial(
-          icon: Icons.add,
-          activeIcon: Icons.close,
-          spaceBetweenChildren: 30,
-          backgroundColor: mainColor,
-          overlayColor: Colors.black,
-          overlayOpacity: 0.6,
-          buttonSize: buttonSize,
-          // childPadding: const EdgeInsets.only(right: 20),
-          childrenButtonSize: buttonSize,
-          children: [
-            SpeedDialChild(
-              child: const Text(
-                "알람",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Roboto",
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onTap: ()=>showModalBottomSheet<void>(
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top:Radius.circular(30.0))
-                  ),
-                  isScrollControlled: true,
-                  backgroundColor: Colors.white,
-                  builder: (context) => const AlarmSettingPage()
-              ),
-              backgroundColor: mainColor,
+        child: _buildSpeedDial()
+      ),
+    );
+  }
+
+  var mainColor = const Color(0xff6524FF);
+  var buttonSize = const Size(80,80);
+
+  Widget _buildSpeedDial(){
+    return SpeedDial(
+      icon: Icons.add,
+      activeIcon: Icons.close,
+      spaceBetweenChildren: 30,
+      backgroundColor: mainColor,
+      overlayColor: Colors.black,
+      overlayOpacity: 0.6,
+      buttonSize: buttonSize,
+      // childPadding: const EdgeInsets.only(right: 20),
+      childrenButtonSize: buttonSize,
+      children: [
+        SpeedDialChild(
+          child: const Text(
+            "알람",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Roboto",
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
-            SpeedDialChild(
-              child: const Text(
-                "퀵 알람",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Roboto",
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+          ),
+          onTap: ()=>showModalBottomSheet<void>(
+              context: context,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top:Radius.circular(30.0))
               ),
-              onTap: () {},
-              backgroundColor: mainColor,
-            )
-          ],
+              isScrollControlled: true,
+              backgroundColor: Colors.white,
+              builder: (context) => const AlarmSettingPage(labelText: '#일정',)
+          ),
+          backgroundColor: mainColor,
         ),
+        SpeedDialChild(
+          child: const Text(
+            "퀵 알람",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Roboto",
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onTap: () {},
+          backgroundColor: mainColor,
+        )
+      ],
+    );
+  }
+
+  Widget _buildTop(){
+    return const Text('Kant',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize:48,
+        letterSpacing: -2,
+        fontFamily: "Roboto",
+        color: Color(0xff6524FF),
       ),
     );
   }
