@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SettingLabelPage extends StatefulWidget {
-  const SettingLabelPage({Key? key}) : super(key: key);
+  const SettingLabelPage({Key? key, required this.labelNotifyParent}) : super(key: key);
+
+  final Function(dynamic) labelNotifyParent;
 
   @override
   State<SettingLabelPage> createState() => _SettingLabelPageState();
@@ -33,11 +35,6 @@ class _SettingLabelPageState extends State<SettingLabelPage> {
       ),
     );
   }
-  @override
-  void dispose(){
-    _labelTextEditController.dispose();
-    super.dispose();
-  }
 
   Widget _buildTitle(){
     return const Text(
@@ -53,7 +50,7 @@ class _SettingLabelPageState extends State<SettingLabelPage> {
   Widget _buildTextButtonConfirm(){
     return TextButton(
       onPressed: (){
-
+        widget.labelNotifyParent(_labelTextEditController.text);
       },
       child: Container(
         width: 120,

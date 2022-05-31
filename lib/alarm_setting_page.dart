@@ -11,7 +11,7 @@ class AlarmSettingPage extends StatefulWidget {
 }
 
 class AlarmSettingPageState extends State<AlarmSettingPage> {
-  String labelText='#일정';
+  String _labelText = '#라벨 텍스트';
   DateTime _dateTime = DateTime.now();
 
   @override
@@ -122,7 +122,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
                 SizedBox(
                   width: 190,
                   child: Text(
-                    labelText,
+                    _labelText,
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Roboto',
@@ -137,7 +137,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
               iconSize: 46,
               onPressed: ()=>showDialog(
                 context: context,
-                builder: (context)=> const SettingLabelPage(),
+                builder: (context)=> SettingLabelPage(labelNotifyParent: _changeLabel),
               ),
             ),
           ],
@@ -168,7 +168,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
           SizedBox(
             width: 105,
             child: Text(
-              labelText,
+              _labelText,
               style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Roboto',
@@ -201,7 +201,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
 
   void _changeLabel(text){
     setState(() {
-      labelText = text;
+      _labelText = text;
     });
   }
 }
