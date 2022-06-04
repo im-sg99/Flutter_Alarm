@@ -12,6 +12,7 @@ class AlarmSettingPage extends StatefulWidget {
 
 class AlarmSettingPageState extends State<AlarmSettingPage> {
   String _labelText = '라벨 텍스트';
+  List<String> _dayList = ['','','','','','',''];
   DateTime _dateTime = DateTime.now();
 
   @override
@@ -122,7 +123,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
                 SizedBox(
                   width: 190,
                   child: Text(
-                    '\#$_labelText',
+                    '#$_labelText',
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Roboto',
@@ -168,7 +169,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
           SizedBox(
             width: 105,
             child: Text(
-              _labelText,
+              _dayList.join(''),
               style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Roboto',
@@ -178,7 +179,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
           IconButton(
             onPressed: ()=>showDialog(
             context: context,
-            builder: (context)=>const SettingRepeatPage(),
+            builder: (context)=> SettingRepeatPage(repeatNotifyParent: _changeDay),
             ),
             icon: const Icon(Icons.chevron_right),
             color: const Color(0xff6524FF),
@@ -202,6 +203,12 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
   void _changeLabel(text){
     setState(() {
       _labelText = text;
+    });
+  }
+
+  void _changeDay(list){
+    setState(() {
+      _dayList = list;
     });
   }
 }

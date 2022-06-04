@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SettingRepeatPage extends StatefulWidget {
-  const SettingRepeatPage({Key? key}) : super(key: key);
+  const SettingRepeatPage({Key? key, required this.repeatNotifyParent}) : super(key: key);
+
+  final Function(dynamic) repeatNotifyParent;
 
   @override
   State<SettingRepeatPage> createState() => _SettingRepeatPageState();
@@ -9,11 +11,13 @@ class SettingRepeatPage extends StatefulWidget {
 
 class _SettingRepeatPageState extends State<SettingRepeatPage> {
 
+  List<String> selectDay = ['','','','','','',''];
+
   // 버튼 색변경에 사용되는 프로퍼티
- var stateColor = MaterialStateProperty.all(const Color(0xffA07BF8));
+  var stateColor = MaterialStateProperty.all(const Color(0xffA07BF8));
   var stateColorPressed = MaterialStateProperty.all(const Color(0xff6524FF));
   List<bool> pressed = List<bool>.filled(7, false);
-  final List _days =['월', '화', '수', '목', '금', '토', '일'];
+  final List<String> _days =['월', '화', '수', '목', '금', '토', '일'];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,6 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
                   Column(
                     children: [
                       _buildNotice(),
-                      _buildNotice2(),
                     ],
                   )
                 ],
@@ -60,18 +63,13 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
 
   Widget _buildNotice() {
     return Container(
-        margin: const EdgeInsets.only(left: 0),
+      width: 150,
+        margin: const EdgeInsets.only(left: 10),
         child: Text(
-          '요일 들어갈 곳 ',
-        )
-    );
-  }
-
-  Widget _buildNotice2() {
-    return Container(
-        margin: const EdgeInsets.only(left: 0),
-        child: const Text(
-          '에 울립니다.',
+          '${selectDay.join('')} \n요일에 울립니다.',
+          style: const TextStyle(
+            color: Color(0xff6524FF)
+          ),
         )
     );
   }
@@ -79,6 +77,7 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
   Widget _buildTextButtonConfirm() {
     return TextButton(
       onPressed: () {
+        widget.repeatNotifyParent(selectDay);
         Navigator.pop(context);
       },
       child: Container(
@@ -141,6 +140,7 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
                 setState(() {
                   pressed[day.key] = !pressed[day.key];
                 });
+                _changeDay(day.key);
               },
               style: ButtonStyle(
                 backgroundColor: pressed[day.key] ? stateColorPressed : stateColor
@@ -163,4 +163,11 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
     );
   }
 
+  void _changeDay(int key) {
+    if(pressed[key] == true) {
+      selectDay[key] =_days[key];
+    } else {
+      selectDay[key] = '';
+    }
+  }
 }
