@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class SettingLabelPage extends StatefulWidget {
   const SettingLabelPage({Key? key, required this.labelNotifyParent}) : super(key: key);
 
+  //실제 부모클래스한태 라벨값을 넘겨주는 프로퍼티
   final Function(dynamic) labelNotifyParent;
 
   @override
@@ -50,7 +51,9 @@ class _SettingLabelPageState extends State<SettingLabelPage> {
   Widget _buildTextButtonConfirm(){
     return TextButton(
       onPressed: (){
+        //라벨 값에 컨트롤러를 텍스트로 변환해서 넘겨줌
         widget.labelNotifyParent(_labelTextEditController.text);
+        Navigator.pop(context);
       },
       child: Container(
         width: 120,

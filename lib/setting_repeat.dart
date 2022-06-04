@@ -8,6 +8,13 @@ class SettingRepeatPage extends StatefulWidget {
 }
 
 class _SettingRepeatPageState extends State<SettingRepeatPage> {
+
+  // 버튼 색변경에 사용되는 프로퍼티
+ var stateColor = MaterialStateProperty.all(const Color(0xffA07BF8));
+  var stateColorPressed = MaterialStateProperty.all(const Color(0xff6524FF));
+  List<bool> pressed = List<bool>.filled(7, false);
+  final List _days =['월', '화', '수', '목', '금', '토', '일'];
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -18,7 +25,12 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
               Row(
                 children: [
                   _buildTitle(),
-                  _buildNotice()
+                  Column(
+                    children: [
+                      _buildNotice(),
+                      _buildNotice2(),
+                    ],
+                  )
                 ],
               ),
               _sizedBoxH20(),
@@ -35,7 +47,7 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
     );
   }
 
-  Widget _buildTitle(){
+  Widget _buildTitle() {
     return const Text(
       '반복 설정',
       style: TextStyle(
@@ -46,18 +58,27 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
     );
   }
 
-  Widget _buildNotice(){
+  Widget _buildNotice() {
     return Container(
-      margin: const EdgeInsets.only(left: 20),
-        child: const Text(
-            "에 울립니다.",
+        margin: const EdgeInsets.only(left: 0),
+        child: Text(
+          '요일 들어갈 곳 ',
         )
     );
   }
 
-  Widget _buildTextButtonConfirm(){
+  Widget _buildNotice2() {
+    return Container(
+        margin: const EdgeInsets.only(left: 0),
+        child: const Text(
+          '에 울립니다.',
+        )
+    );
+  }
+
+  Widget _buildTextButtonConfirm() {
     return TextButton(
-      onPressed: (){
+      onPressed: () {
         Navigator.pop(context);
       },
       child: Container(
@@ -81,15 +102,15 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
     );
   }
 
-  Widget _buildTextButtonCancel(){
+  Widget _buildTextButtonCancel() {
     return TextButton(
-      onPressed: ()=>Navigator.pop(context),
+      onPressed: () => Navigator.pop(context),
       child: Container(
         width: 120,
         height: 45,
         decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        color: const Color(0xffCCD3E3),
+          borderRadius: BorderRadius.circular(6.0),
+          color: const Color(0xffCCD3E3),
         ),
         child: const Center(
             child: Text(
@@ -108,36 +129,35 @@ class _SettingRepeatPageState extends State<SettingRepeatPage> {
 
   Widget _buildAlarmInfoDay() {
     const size = 35.0;
-    var _stateColor = Color(0xffA07BF8);
-    var sun, mon, tue, wed, thu, fri, sat = false;
+
     return Row(
-      children: ['월', '화', '수', '목', '금', '토', '일'].map(
-            (day) => Container(
-              margin: const EdgeInsets.all(2),
-              width: size,
-              height: size,
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    _stateColor == Color(0xffA07BF8) ? Color(0xff6524FF):Color(0xffA07BF8);
-                  });
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(_stateColor),
-                ),
-                child: Text(
-                  day,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
+      children: _days.asMap().entries.map(
+              (day) => Container(
+            margin: const EdgeInsets.all(2),
+            width: size,
+            height: size,
+            child: TextButton(
+              onPressed: () {
+                setState(() {
+                  pressed[day.key] = !pressed[day.key];
+                });
+              },
+              style: ButtonStyle(
+                backgroundColor: pressed[day.key] ? stateColorPressed : stateColor
+              ),
+              child: Text(
+                day.value,
+                style: const TextStyle(
+                  color: Colors.white,
                 ),
               ),
-            )
+            ),
+          )
       ).toList(),
     );
   }
 
-  Widget _sizedBoxH20(){
+  Widget _sizedBoxH20() {
     return const SizedBox(
       height: 20,
     );

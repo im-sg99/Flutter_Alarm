@@ -11,7 +11,7 @@ class AlarmSettingPage extends StatefulWidget {
 }
 
 class AlarmSettingPageState extends State<AlarmSettingPage> {
-  String _labelText = '#라벨 텍스트';
+  String _labelText = '라벨 텍스트';
   DateTime _dateTime = DateTime.now();
 
   @override
@@ -122,7 +122,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
                 SizedBox(
                   width: 190,
                   child: Text(
-                    _labelText,
+                    '\#$_labelText',
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Roboto',
