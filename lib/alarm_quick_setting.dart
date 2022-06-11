@@ -8,47 +8,66 @@ class QuickSettingPage extends StatefulWidget {
 }
 
 class _QuickSettingPageState extends State<QuickSettingPage> {
-
   double _volumeScale = 1.0;
   bool _setVibration = false;
-  bool toggle = false;
+  bool _toggle = false; // toggle -> _toggle <진동민 : 변경>
+  int _time = 0;
 
   @override
   Widget build(BuildContext context) {
+    String hourStr = '${_time ~/ 60}'.padLeft(2, '0');
+    String minStr = '${_time % 60}'.padLeft(2, '0');
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 360,
-        margin: const EdgeInsets.only(bottom: 20, left: 15, right:15),
+        margin: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10), // 20 -> 10 <진동민: 변경>
         ),
         child: SizedBox.expand(
           child: Column(
             children: [
-              _buildSizedBox(),
-              const Text("퀵 알람",style: TextStyle(decoration: TextDecoration.none, color: Colors.black, fontSize: 30),),
-              const Text("+00:00",style: TextStyle(decoration: TextDecoration.none, color: Colors.black),),
-              _buildSizedBox(),
+              _buildHeightBox(),
+              const Text(
+                "퀵 알람",
+                style: TextStyle(
+                  decoration: TextDecoration.none,
+                  color: Colors.black,
+                  fontSize: 30,
+                ),
+              ),
+              Text( // const 제거 <진동민: 변경>
+                '+$hourStr:$minStr', // "+00:00" <진동민: 변경>
+                style: const TextStyle(
+                    decoration: TextDecoration.none,
+                    color: Colors.black
+                ),
+              ),
+              _buildHeightBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _build1minute(),
-                  _build5minute(),
-                  _build10minute()
+                  _buildMinBtn(min: 1),
+                  _buildWidthBox(),
+                  _buildMinBtn(min: 5),
+                  _buildWidthBox(),
+                  _buildMinBtn(min: 10),
                 ],
               ),
-              _buildSizedBox(),
+              _buildHeightBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _build15minute(),
-                  _build30minute(),
-                  _build1Hour()
+                  _buildMinBtn(min: 15),
+                  _buildWidthBox(),
+                  _buildMinBtn(min: 30),
+                  _buildWidthBox(),
+                  _buildMinBtn(min: 60),
                 ],
               ),
-              _buildSizedBox(),
+              _buildHeightBox(),
               _buildLine(),
               Material(
                 child: Row(
@@ -63,14 +82,14 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
                   ],
                 ),
               ),
-              _buildSizedBox(),
+              _buildHeightBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildResetButton(),
-                  _buildSaveButton()
+                  _buildResetBtn(),
+                  _buildSaveBtn(),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -78,7 +97,7 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
     );
   }
 
-  Widget _build1minute(){
+  Widget _buildMinBtn({required int min}) {  // <진동민 : 추가>
     return Container(
       width: 90,
       height: 50,
@@ -87,149 +106,51 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
         color: const Color(0xffC4C4C4),
       ),
       child: TextButton(
-        onPressed: (){},
-        child: const Text(
-          "+1분",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
+        child: Text(
+          "+$min분",
+          style: const TextStyle(
+            fontSize: 23, // 18 -> 23 <진동민: 변경>
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
+        onPressed: () {
+          setState(() {
+            _time += min;
+          });
+        },
       ),
     );
   }
 
-  Widget _build5minute() {
-    return Container(
-      width: 90,
-      height: 50,
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        color: const Color(0xffC4C4C4),
-      ),
-      child: TextButton(
-        onPressed: (){},
-        child: const Text(
-          "+5분",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _build10minute() {
-    return Container(
-      width: 90,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        color: const Color(0xffC4C4C4),
-      ),
-      child: TextButton(
-        onPressed: (){},
-        child: const Text(
-          "+10분",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _build15minute(){
-    return Container(
-      width: 90,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        color: const Color(0xffC4C4C4),
-      ),
-      child: TextButton(
-        onPressed: (){},
-        child: const Text(
-          "+15분",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _build30minute() {
-    return Container(
-      width: 90,
-      height: 50,
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        color: const Color(0xffC4C4C4),
-      ),
-      child: TextButton(
-        onPressed: (){},
-        child: const Text(
-          "+30분",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _build1Hour() {
-    return Container(
-      width: 90,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        color: const Color(0xffC4C4C4),
-      ),
-      child: TextButton(
-        onPressed: (){},
-        child: const Text(
-          "+60분",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSizedBox(){
+  Widget _buildHeightBox() {  // <진동민: 함수이름변경>
     return const SizedBox(
       height: 10,
     );
   }
 
-  Widget _buildLine(){
+  Widget _buildWidthBox() { // <진동민: 추가>
+    return const SizedBox(
+      width: 20,
+    );
+  }
+
+  Widget _buildLine() {
     return Container(
       color: const Color(0xffE5EcE6),
       height: 3,
     );
   }
 
-  Widget _volumeIcon(){
-    return const Icon(Icons.volume_up,color: Color(0xff6524FF),size: 30,);
+  Widget _volumeIcon() {
+    return const Icon(
+      Icons.volume_up,
+      color: Color(0xff6524FF),
+      size: 30,
+    );
   }
 
-  Widget _volumeSlider(){
+  Widget _volumeSlider() {
     return SizedBox(
       width: 150,
       height: 2,
@@ -245,8 +166,8 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
         ),
         child: Slider(
           value: _volumeScale,
-          onChanged: (value){
-            setState(()=> _volumeScale = value);
+          onChanged: (value) {
+            setState(() => _volumeScale = value);
           },
           min: 0,
           max: 100,
@@ -255,41 +176,48 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
     );
   }
 
-  Widget _playButton(){
+  Widget _playButton() {
     return IconButton(
-        onPressed: (){
+        onPressed: () {
           setState(() {
-            toggle = !toggle;
+            _toggle = !_toggle;
           });
         },
-        icon: toggle
-            ?  const Icon(Icons.pause,
+        icon: _toggle
+            ? const Icon(
+          Icons.pause,
           size: 30,
-          color: Color(0xff6524FF),)
-            : const Icon(Icons.play_arrow,
+          color: Color(0xff6524FF),
+        )
+            : const Icon(
+          Icons.play_arrow,
           size: 30,
-          color: Color(0xff6524FF),)
-
+          color: Color(0xff6524FF),
+        )
     );
   }
 
-  Widget _vibIcon(){
-    return const Icon(Icons.vibration, color: Color(0xff6524FF),size: 30,);
-  }
-
-  Widget _containerLine(){
+  Widget _containerLine() {
     return Container(
-      margin: const EdgeInsets.only(left: 10,right: 10),
+      margin: const EdgeInsets.only(left: 10, right: 10),
       width: 3,
       height: 30,
-      color: Colors.grey,
+      color: const Color(0xffE5ECE6), // 색변경 <진동민:변경>
     );
   }
 
-  Widget _vibCheck(){
+  Widget _vibIcon() {
+    return const Icon(
+      Icons.vibration,
+      color: Color(0xff6524FF),
+      size: 30,
+    );
+  }
+
+  Widget _vibCheck() {
     return Checkbox(
         value: _setVibration,
-        onChanged: (value){
+        onChanged: (value) {
           setState(() {
             _setVibration = !_setVibration;
           });
@@ -297,7 +225,7 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
     );
   }
 
-  Widget _buildResetButton(){
+  Widget _buildResetBtn() { // 이름 변경 <진동민: 변경>
     return Container(
       width: 120,
       height: 45,
@@ -306,38 +234,46 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
         color: const Color(0xffCCD3E3),
       ),
       child: TextButton(
-        onPressed: (){},
         child: const Center(
-            child: Icon(Icons.refresh, color:Color(0xff000000), size: 30,),
+          child: Icon(
+            Icons.refresh,
+            color: Colors.black,
+            size: 30,
+          ),
         ),
+        onPressed: () {
+          setState(() {
+            _time=0;
+          });
+        },
       ),
     );
   }
 
-  Widget _buildSaveButton(){
+  Widget _buildSaveBtn() {
     return Container(
       margin: const EdgeInsets.only(left: 30),
-      width: 180,
+      width: 190, // 180 -> 190으로 변경 <진동민: 변경>
       height: 45,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6.0),
         color: const Color(0xff6524FF),
       ),
       child: TextButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.pop(context);
         },
         child: const Center(
-            child: Text(
-              '저장',
-              style: TextStyle(
-                  color: Color(0xffFFFFFF),
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold
-              ),
-            )
+          child: Text(
+            '저장',
+            style: TextStyle(
+              color: Colors.white, // <진동민: 변경>
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
-  }  
+  }
 }
