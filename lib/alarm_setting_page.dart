@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_alarm/setting_label.dart';
 import 'package:flutter_alarm/setting_repeat.dart';
+import 'package:flutter_alarm/setting_sound.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class AlarmSettingPage extends StatefulWidget {
@@ -18,21 +19,22 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 0.82,
+      heightFactor: 0.80,
       child: Center(
         child: Column(
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                _slidingUpPanelIcon(),
                 _buildSaveButton(),
                 _buildCloseButton()
               ],
             ),
             _buildTimePicker(),
             _buildLabelContainer(),
-            _buildContainer1(),
-            _buildContainer2()
+            _buildRepeatContainer(),
+            _buildSoundContainer()
           ],
         ),
       ),
@@ -146,7 +148,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
-  Widget _buildContainer1(){
+  Widget _buildRepeatContainer(){
     return Container(
       padding: const EdgeInsets.only(left: 20,top: 4),
       margin: const EdgeInsets.only(bottom: 25),
@@ -190,13 +192,36 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
-  Widget _buildContainer2(){
+  Widget _buildSoundContainer(){
     return Container(
       padding: const EdgeInsets.only(left: 20,top: 4),
       margin: const EdgeInsets.only(bottom: 25),
       width:280,
       height: 65,
       decoration: _boxDeco,
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 190,
+            child: Text('소리 및 진동 설정',
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: ()=>showDialog(
+              context: context,
+              builder: (context)=> const SettingSoundPage(),
+            ),
+            icon: const Icon(Icons.chevron_right),
+            color: const Color(0xff6524FF),
+            iconSize: 46,
+          ),
+        ],
+      ),
     );
   }
 
@@ -210,6 +235,18 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     setState(() {
       _dayList = list;
     });
+  }
+
+  Widget _slidingUpPanelIcon(){
+    return Container(
+      margin: EdgeInsets.only(right: 70),
+      width: 40,
+      height: 3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xffC4C4C4),
+      ),
+    );
   }
 }
 

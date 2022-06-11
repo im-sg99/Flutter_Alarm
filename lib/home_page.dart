@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm/alarm_quick_setting.dart';
 import 'package:flutter_alarm/alarm_setting_page.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter/services.dart';
@@ -45,7 +46,6 @@ class _HomePageState extends State<HomePage> {
       overlayColor: Colors.black,
       overlayOpacity: 0.6,
       buttonSize: buttonSize,
-      // childPadding: const EdgeInsets.only(right: 20),
       childrenButtonSize: buttonSize,
       children: [
         SpeedDialChild(
@@ -79,7 +79,10 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          onTap: () {},
+          onTap: ()=>showDialog(
+            context: context,
+            builder: (context) => const QuickSettingPage(),
+          ),
           backgroundColor: mainColor,
         )
       ],
