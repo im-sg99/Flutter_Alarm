@@ -10,7 +10,7 @@ class kantSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return MaterialApp(
       home:  AnimatedSplashScreen(

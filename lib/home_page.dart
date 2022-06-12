@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_alarm/alarm_quick_setting.dart';
 import 'package:flutter_alarm/alarm_setting_page.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:flutter/services.dart';
+
+const mainColor = Color(0xff6524FF);
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,16 +15,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    //위에 배터리 표시줄 안뜨게
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.fromLTRB(40,50,40,40),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 45,left: 30,right: 30),
         child: Column(
           children: [
             _buildTop(),
+            _buildInfoMessage(),
           ],
         ),
       ),
@@ -34,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  var mainColor = const Color(0xff6524FF);
+
   var buttonSize = const Size(80,80);
 
   Widget _buildSpeedDial(){
@@ -90,14 +88,34 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildTop(){
-    return const Text('Kant',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize:48,
-        letterSpacing: -2,
-        fontFamily: "Roboto",
-        color: Color(0xff6524FF),
+    return const Align(
+      alignment: Alignment.topLeft,
+      child: Text('Kant',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize:48,
+          letterSpacing: -2,
+          fontFamily: "Roboto",
+          color: mainColor,
+        ),
+        textAlign: TextAlign.left,
       ),
     );
   }
+
+  Widget _buildInfoMessage(){
+      return Container(
+        margin: const EdgeInsets.only(top:130),
+        child: const Text(
+          "알람이 없습니다.\n\n 아래 버튼을 눌러서\n알람을 생성합니다.",
+          style: TextStyle(
+            fontSize: 35.0,
+            color: mainColor,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      );
+  }
+
 }

@@ -14,7 +14,9 @@ class AlarmSettingPage extends StatefulWidget {
 class AlarmSettingPageState extends State<AlarmSettingPage> {
   String _labelText = '라벨 텍스트';
   List<String> _dayList = ['','','','','','',''];
-  DateTime _dateTime = DateTime.now();
+  DateTime _dateTime = DateTime.now(); //타임피커에서 현재 시각을 받아와 띄움
+  var _volumeScale = 0.5;
+  bool _vibration = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
-
+  //컨테이너의 모양을 정의합니다.
   final _boxDeco = const BoxDecoration(
       borderRadius: BorderRadius.all(
         Radius.circular(20.0),),
@@ -54,6 +56,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
         offset: Offset(1, 1),),]
   );
 
+  //저장 버튼입니다. (미완)
   Widget _buildSaveButton(){
     return TextButton(
       onPressed: (){},
@@ -63,6 +66,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
+  //취소 버튼입니다. 메인화면으로 돌아갑니다.
   Widget _buildCloseButton(){
     return IconButton(
       onPressed: ()=>Navigator.pop(context),
@@ -74,6 +78,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
+  //시간을 선택할 수 있는 위젯입니다
   Widget _buildTimePicker(){
     return Container(
       margin: const EdgeInsets.only(top:20,bottom: 45),
@@ -101,6 +106,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
+  //라벨링에 설정 내용을 보여주고 설정 화면으로 이동하는 컨테이너입니다.
   Widget _buildLabelContainer(){
     return Container(
         padding: const EdgeInsets.only(left: 20,top: 4),
@@ -148,6 +154,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
+  //반복할 요일을 선택하는 화면으로 이동하는 컨테이너입니다.
   Widget _buildRepeatContainer(){
     return Container(
       padding: const EdgeInsets.only(left: 20,top: 4),
@@ -192,6 +199,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
+  //소리 및 진동을 설정하는 화면으로 이동하는 컨테이너입니다.
   Widget _buildSoundContainer(){
     return Container(
       padding: const EdgeInsets.only(left: 20,top: 4),
@@ -214,7 +222,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
           IconButton(
             onPressed: ()=>showDialog(
               context: context,
-              builder: (context)=> const SettingSoundPage(),
+              builder: (context)=> SettingSoundPage(volumeNotifyParent: _changeVol,vibrationNotifyParent: _changeVib,),
             ),
             icon: const Icon(Icons.chevron_right),
             color: const Color(0xff6524FF),
@@ -225,21 +233,38 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
     );
   }
 
+  //하위 클래스 페이지에서 설정힌 값을 클래스 변수로 받아옵니다.
   void _changeLabel(text){
     setState(() {
       _labelText = text;
     });
   }
 
+  //하위 클래스 페이지에서 설정힌 값을 클래스 변수로 받아옵니다.
   void _changeDay(list){
     setState(() {
       _dayList = list;
     });
   }
 
+  //하위 클래스 페이지에서 설정힌 값을 클래스 변수로 받아옵니다.
+  void _changeVol(volume){
+    setState(() {
+      _volumeScale = volume;
+    });
+  }
+
+  //하위 클래스 페이지에서 설정힌 값을 클래스 변수로 받아옵니다.
+  void _changeVib(vib){
+    setState(() {
+      _vibration = vib;
+    });
+  }
+
+  //상위 슬라이딩업패널(-) 아이콘을 그립니다.
   Widget _slidingUpPanelIcon(){
     return Container(
-      margin: EdgeInsets.only(right: 70),
+      margin: const EdgeInsets.only(right: 70),
       width: 40,
       height: 3,
       decoration: BoxDecoration(
