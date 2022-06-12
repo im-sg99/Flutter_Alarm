@@ -21,7 +21,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 0.80,
+      heightFactor: 0.86,
       child: Center(
         child: Column(
           children: <Widget>[

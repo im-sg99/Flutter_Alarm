@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm/alarm_db.dart';
 
 class QuickSettingPage extends StatefulWidget {
-  const QuickSettingPage({Key? key}) : super(key: key);
+  const QuickSettingPage({Key? key, required this.num}) : super(key: key);
+  final int num;
 
   @override
   State<QuickSettingPage> createState() => _QuickSettingPageState();
@@ -260,9 +262,7 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
         color: const Color(0xff6524FF),
       ),
       child: TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: saveQuickAlarm,
         child: const Center(
           child: Text(
             '저장',
@@ -275,5 +275,23 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
         ),
       ),
     );
+  }
+
+  Future<void> saveQuickAlarm() async {
+    Navigator.pop(context);
+    AlarmDB db = AlarmDB();
+    // db.reset();
+    DateTime now = DateTime.now();
+    now = now.add(Duration(minutes: _time));
+    DateTime currentTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
+    var alarm = Alarm(
+      id: widget.num,
+      type: AlarmType.quick.index,
+      time: currentTime.toString(),
+      state: TurnAlarm.on.index,
+      label: '퀵 알람',
+    );
+    await db.insertAlarm(alarm);
   }
 }
