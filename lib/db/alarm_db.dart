@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -18,11 +19,11 @@ enum StateAlarm {
 }
 
 class Alarm {
-  int id;  // 알람이 저장된 순서
-  int type; // 알람 타입 (퀵 알람 or 일반 알람)
-  String time; // 퀵 알람이 울려야 할 시간
-  int state;  // 알람이 켜져있는지, 꺼져있는지
-  String label;
+  int id;  // 알람이 저장된 순서  (ex: id = 0, 1, 2, 3...)
+  int type; // 알람 타입 (퀵 알람 or 일반 알람) (ex: type = AlarmType.quick.index)
+  String time; // 퀵 알람이 울려야 할 시간 (ex: time = DateTime.now())
+  int state;  // 알람이 켜져있는지, 꺼져있는지 (ex. state = TurnAlarm.on.index)
+  String label; // 알람 이름 (ex. label = '알람1')
 
   Alarm({
     required this.id,
@@ -41,6 +42,12 @@ class Alarm {
       'label': label,
     };
   }
+
+
+  int callbackIdOf(int weekday) {
+    return id + weekday;
+  }
+  TimeOfDay get timeOfDay => TimeOfDay(hour: DateTime.parse(time).hour, minute: DateTime.parse(time).minute);
 
   @override
   String toString() {
@@ -123,6 +130,6 @@ class AlarmDB {
 
     await db.execute('DROP TABLE IF EXISTS ALARM_TB');
     await db.execute('CREATE TABLE ALARM_TB(id INTEGER PRIMARY KEY, type INTEGER, time TEXT, state INTEGER, label TEXT)');
-    print('No problem');
+    debugPrint('No problem');
   }
 }

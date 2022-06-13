@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_alarm/alarm_db.dart';
-import 'package:flutter_alarm/alarm_quick_setting.dart';
-import 'package:flutter_alarm/alarm_setting_page.dart';
+import 'package:flutter_alarm/db/alarm_db.dart';
+import 'package:flutter_alarm/view/alarm/switch.dart';
+import 'package:flutter_alarm/view/alarm_quick_setting.dart';
+import 'package:flutter_alarm/view/alarm_setting_page.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 const mainColor = Color(0xff6524FF);
@@ -29,7 +30,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // <진동민: 추가>
     // 상태바 배경색깔 바꾸기
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -109,6 +109,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //제목
   Widget _buildTop() {
     return const Align(
       alignment: Alignment.topLeft,
@@ -125,6 +126,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //알람 정보 출력
   Widget _buildInfoMessage(
       {required StateAlarm state, int hourRemain = 0, int minRemain = 0}) {
     var textStyle = const TextStyle(
@@ -204,7 +206,8 @@ class _HomePageState extends State<HomePage> {
       }).toList();
       var timeMinValue = timeList.reduce(min);
       var now = DateTime.now().millisecondsSinceEpoch;
-      timeRemain = DateTime.fromMillisecondsSinceEpoch(timeMinValue - now);
+      timeRemain = DateTime.fromMillisecondsSinceEpoch(timeMinValue - now );
+      //debugPrint(timeRemain.toString());
     } else {
       state = StateAlarm.inactive;
     }
@@ -250,14 +253,11 @@ class _HomePageState extends State<HomePage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildAlarmInfo_time(time: alarm.time),
+            _buildAlarmInfoTime(time: alarm.time),
             _buildAlarmLabel(label: alarm.label),
           ],
         ),
-        const SizedBox(
-          width: 95.0,
-        ),
-        _buildAlarmSwitch(),
+        AlarmSwitch(alarm: alarm),
       ],
     );
   }
@@ -270,13 +270,13 @@ class _HomePageState extends State<HomePage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildAlarmInfo_time(time: alarm.time),
+            _buildAlarmInfoTime(time: alarm.time),
             _buildAlarmLabel(label: alarm.label),
-            _buildAlarmInfo_day(),
+            _buildAlarmInfoDay(),
           ],
         ),
         _buildWidthSpace(),
-        _buildAlarmSwitch(),
+        AlarmSwitch(alarm: alarm),
       ],
     );
   }
@@ -292,18 +292,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildAlarmInfo_time({required String time}) {
+  Widget _buildAlarmInfoTime({required String time}) {
     DateTime savedTime = DateTime.parse(time);
     String whichMeridiem = savedTime.hour >= 12 ? '오후' : '오전';
     int hour = savedTime.hour % 12;
     int min = savedTime.minute;
     String timeStr = '$whichMeridiem $hour시 $min분';
-    return Text(
-      timeStr,
-      style: const TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 25.0,
-        fontWeight: FontWeight.bold,
+    return SizedBox(
+      width: 250,
+      child: Text(
+        timeStr,
+        style: const TextStyle(
+          fontFamily: 'Roboto',
+          fontSize: 25.0,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -317,7 +320,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildAlarmInfo_day() {
+  Widget _buildAlarmInfoDay() {
     const size = 25.0;
     return Row(
       children: ['월', '화', '수', '목', '금', '토', '일']
@@ -341,21 +344,6 @@ class _HomePageState extends State<HomePage> {
             ),
           )
           .toList(),
-    );
-  }
-
-  Widget _buildAlarmSwitch() {
-    bool isSwitched = false; // State<MainPage> 의 프로퍼티로 위치해야함
-    return Transform.scale(
-      scale: 1.5,
-      child: Switch(
-        value: isSwitched,
-        onChanged: (value) {
-          setState(() {
-            isSwitched = value;
-          });
-        },
-      ),
     );
   }
 }

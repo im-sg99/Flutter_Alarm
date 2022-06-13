@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_alarm/alarm_db.dart';
+import 'package:flutter_alarm/db/alarm_db.dart';
 
 class QuickSettingPage extends StatefulWidget {
   const QuickSettingPage({Key? key, required this.num}) : super(key: key);
@@ -282,7 +282,7 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
     AlarmDB db = AlarmDB();
     // db.reset();
     DateTime now = DateTime.now();
-    now = now.add(Duration(minutes: _time));
+    now = now.add(Duration(minutes: _time - 9 * 60));
     DateTime currentTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
     var alarm = Alarm(

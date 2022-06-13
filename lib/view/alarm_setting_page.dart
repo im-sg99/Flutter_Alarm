@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_alarm/setting_label.dart';
-import 'package:flutter_alarm/setting_repeat.dart';
-import 'package:flutter_alarm/setting_sound.dart';
+import 'package:flutter_alarm/view/setting_label.dart';
+import 'package:flutter_alarm/view/setting_repeat.dart';
+import 'package:flutter_alarm/view/setting_sound.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class AlarmSettingPage extends StatefulWidget {
