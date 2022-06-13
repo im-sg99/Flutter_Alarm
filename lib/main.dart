@@ -21,12 +21,12 @@ void main() async{
   // 앱 진입시 알람 탐색을 시작해야 한다.
   AlarmPollingWorker().createPollingWorker(alarmState);
 
-  final List<Alarm> alarms = await AlarmDB().read() ?? [];
+  //final List<Alarm> alarms = await AlarmDB().read() ?? [];  //<-
 
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => alarmState),
-      ChangeNotifierProvider(create: (context) => AlarmListProvider(alarms)),
+      //ChangeNotifierProvider(create: (context) => AlarmListProvider(alarms)),
     ],
     child: MyApp(preferences: await SharedPreferences.getInstance()),
   ));

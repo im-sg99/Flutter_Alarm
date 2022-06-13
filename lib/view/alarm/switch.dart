@@ -30,9 +30,10 @@ class _AlarmSwitchState extends State<AlarmSwitch> {
             state: value ? TurnAlarm.on.index : TurnAlarm.off.index,
             label: widget.alarm.label,
           );
-          setState(() {
+          setState(() async {
             turn = value;
             db.updateAlarm(tmp);
+            if(turn == false && widget.alarm.type == AlarmType.quick.index) await db.deleteAlarm(widget.alarm.id);
           });
         },
       ),

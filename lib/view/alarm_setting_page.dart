@@ -4,9 +4,12 @@ import 'package:flutter_alarm/view/setting_repeat.dart';
 import 'package:flutter_alarm/view/setting_sound.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
-class AlarmSettingPage extends StatefulWidget {
+import '../db/alarm_db.dart';
 
-  const AlarmSettingPage({Key? key}) : super(key: key);
+class AlarmSettingPage extends StatefulWidget {
+  final int num;
+  const AlarmSettingPage({Key? key, required this.num}) : super(key: key);
+
   @override
   State<AlarmSettingPage> createState() => AlarmSettingPageState();
 }
@@ -17,6 +20,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
   DateTime _dateTime = DateTime.now(); //타임피커에서 현재 시각을 받아와 띄움
   var _volumeScale = 0.5;
   bool _vibration = false;
+  int _time = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +63,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
   //저장 버튼입니다. (미완)
   Widget _buildSaveButton(){
     return TextButton(
-      onPressed: (){},
+      onPressed: saveNormalAlarm,
       child: const Text("Save",
         style: TextStyle(color: Color(0xff6524FF),),
       ),
@@ -99,6 +103,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
         ),
         onTimeChange: (time){
           setState(() {
+            debugPrint(time.toString());
             _dateTime = time;
           });
         },
@@ -273,6 +278,23 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
       ),
     );
   }
-}
 
+  Future<void> saveNormalAlarm() async {
+    Navigator.pop(context);
+    AlarmDB db = AlarmDB();
+
+    _dateTime = _dateTime.add(Duration(minutes: _time));
+    DateTime currentTime = DateTime(_dateTime.year, _dateTime.month, _dateTime.day, _dateTime.hour, _dateTime.minute);
+
+    var alarm = Alarm(
+      id: widget.num,
+      type: AlarmType.normal.index,
+      time: currentTime.toString(),
+      state: TurnAlarm.on.index,
+      label: _labelText,
+    );
+    await db.insertAlarm(alarm);
+  }
+
+}
 

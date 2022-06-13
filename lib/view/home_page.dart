@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                     BorderRadius.vertical(top: Radius.circular(30.0))),
             isScrollControlled: true,
             backgroundColor: Colors.white,
-            builder: (context) => const AlarmSettingPage(),
+            builder: (context) => AlarmSettingPage(num: alarmList.length),
           ),
         ),
         SpeedDialChild(
