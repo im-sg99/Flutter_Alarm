@@ -20,7 +20,7 @@ class AlarmSettingPageState extends State<AlarmSettingPage> {
   DateTime _dateTime = DateTime.now(); //타임피커에서 현재 시각을 받아와 띄움
   var _volumeScale = 0.5;
   bool _vibration = false;
-  int _time = 0;
+  final int _time = 0;
 
   @override
   Widget build(BuildContext context) {

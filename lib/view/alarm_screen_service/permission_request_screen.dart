@@ -50,7 +50,7 @@ class _PermissionRequestScreenState extends State<PermissionRequestScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-                '알람 작동을 위한 \n\"다른 앱 위에 표시\"\n권한을 허용해주세요.',
+                '알람 작동을 위한 \n"다른 앱 위에 표시"\n권한을 허용해주세요.',
               style: TextStyle(
                   color: Color(0xff6524FF),
                   fontSize: 22,

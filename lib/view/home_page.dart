@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
 
     switch (state) {
       case StateAlarm.active:
-        int hour = hourRemain;
+        int hour = hourRemain-9;
         int min = minRemain;
 
         if (hour == 0) {
@@ -206,7 +206,8 @@ class _HomePageState extends State<HomePage> {
       }).toList();
       var timeMinValue = timeList.reduce(min);
       var now = DateTime.now().millisecondsSinceEpoch;
-      timeRemain = DateTime.fromMillisecondsSinceEpoch(timeMinValue - now );
+
+      timeRemain = DateTime.fromMillisecondsSinceEpoch(timeMinValue - now);
       //debugPrint(timeRemain.toString());
     } else {
       state = StateAlarm.inactive;

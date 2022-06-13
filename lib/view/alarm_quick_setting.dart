@@ -282,7 +282,8 @@ class _QuickSettingPageState extends State<QuickSettingPage> {
     AlarmDB db = AlarmDB();
     // db.reset();
     DateTime now = DateTime.now();
-    now = now.add(Duration(minutes: _time - 9 * 60));
+    now = now.add(Duration(minutes: _time));
+    debugPrint(now.toString());
     DateTime currentTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
     var alarm = Alarm(

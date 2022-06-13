@@ -37,6 +37,6 @@ class _AlarmSwitchState extends State<AlarmSwitch> {
           });
         },
       ),
-    );;
+    );
   }
 }
